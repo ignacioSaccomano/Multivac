@@ -17,16 +17,17 @@
 #include <Servo.h>
 
 #define sensor A0
-#define relay 5           //Relay ubicado en el cable de la estufa o reemplazando al switch.
+#define relay 5           //Relay replacing heater or ventilation switch.
 #define pin_servo 3
 
 Servo servo;
 
-byte suma = 0;
+
 int medidas[2];
 int lectura, samples;
 byte temperatura, nueva_medida;
-boolean encendido;      // Siempre que reinice el programa va a estar en false. Así puede encender el aire solo cuando yo lo reinicie. Puede automatizarse con la hora.
+boolean encendido;      // Every time the arduino reboots this variable is set to false. That way it can turn on the device only when you reboot/start it. This can also be automated with a RTC.
+byte takes = 3;      //Defines samples quantity.
 
 void setup() {
   servo.attach(pin_servo, 900, 2100);
@@ -36,7 +37,7 @@ void setup() {
 
 void loop() {
 
-  temperatura = promedio();
+  temperatura = average();
   
   if(temperatura >= 27 && !encendido)         //Si hace mucho calor/frío prende el relay que puede reemplazar al botón del aire acondicionado/estufa.
   {
@@ -48,7 +49,7 @@ void loop() {
   }
   delay(300000);
 
-  nueva_medida = promedio();
+  nueva_medida = average();
   
   if(nueva_medida + 2 > temperatura)
   {
@@ -60,20 +61,22 @@ void loop() {
 }
 
 
-//Sistema de promedio de mediciones:
+//Calculates the average room temperature:
     
 
-int promedio()
+int average()       
 {
-   for (int i = 0; i < 3; i++)
+  byte suma = 0;
+   
+   for (int i = 0; i < takes; i++)
    {
        medidas[i] = analogRead(sensor) * 0.48828125;
        suma += medidas[i];
        delay(5000);      
-       samples ++;      //Si quiero tomar más muestras o menos solo tengo que modificar el numero del for.
+       samples ++;
    }
-      
-   int promedio = (medidas[0]+ medidas[1] + medidas[2]) / samples;
+
+   int promedio = suma / samples;
    
    return promedio;      
 }  
