@@ -1,5 +1,5 @@
 /*
-  Este programa consiste en que cuando se activa el arduino, saca el promedio de la temperatura ambiental (con 3 mediciones para que sea lo más preciso posible)
+  This program consists in que cuando se activa el arduino, saca el promedio de la temperatura ambiental (con 3 mediciones para que sea lo más preciso posible)
   y si es alta según el usuario (y la versión*), enciende de forma automática el aire acondicionado.
 
   No solamente eso sino que luego de 5 minutos de que el aire esté en funcionamiento, y mediante la misma función, se hace un promedio de la temperatura ambiental
