@@ -14,7 +14,7 @@
          aproximadamente en Marzo luego de corroborar la eficacia del dispositivo y verificar si se puede complementar eficazmente con la estufa.
 */
 
-#include <Servo.h>
+#include <Servo.h>      //Visual Studio doesn´t allow this librarie so i should correct this.
 
 #define sensor A0
 #define relay 5           //Relay replacing heater or ventilation switch.
