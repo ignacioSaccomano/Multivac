@@ -1,6 +1,6 @@
 /*
-  This program consists in que cuando se activa el arduino, saca el promedio de la temperatura ambiental (con 3 mediciones para que sea lo más preciso posible)
-  y si es alta según el usuario (y la versión*), enciende de forma automática el aire acondicionado.
+  Este programa consiste en que cuando se activa el arduino, saca el promedio de la temperatura ambiental (con 3 mediciones para que sea lo más preciso posible)
+  y si es alta según el usuario (y la versión [*]), enciende de forma automática el aire acondicionado.
 
   No solamente eso sino que luego de 5 minutos de que el aire esté en funcionamiento, y mediante la misma función, se hace un promedio de la temperatura ambiental
   nuevamente. 
@@ -10,13 +10,15 @@
     Simple. Para que en caso de que haya alguna puerta o ventana abierta el dispositivo apague el aire acondicionado automáticamente para ahorrar energía.
 
 
-    * : Esta es la versión de verano, que incluye sistemas para temperaturas elevadas. En caso de que sea invierno se debe usar dicha versión que será implementada
+    [*] : Esta es la versión de verano, que incluye sistemas para temperaturas elevadas. En caso de que sea invierno se debe usar dicha versión que será implementada
          aproximadamente en Marzo luego de corroborar la eficacia del dispositivo y verificar si se puede complementar eficazmente con la estufa.
+         
+         PD: Mucho spanglish, es porque estaba traduciendo el archivo pero después lo dejé hasta hoy. Queda así porque es gracioso ;).
 */
 
 #include <Arduino.h>
 
-#include <Servo.h>      //Visual Studio doesn´t allow this librarie so i should correct this.
+#include <Servo.h>      //Visual Studio doesn´t allow this library so i should correct this.
 
 #define sensor A0
 #define relay 5           //Relay replacing heater or ventilation switch.
@@ -25,11 +27,11 @@
 Servo servo;
 
 
-int medidas[2];
 int lectura, samples;
 byte temperatura, nueva_medida;
 boolean encendido;      // Every time the arduino reboots this variable is set to false. That way it can turn on the device only when you reboot/start it. This can also be automated with a RTC.
-byte takes = 3;      //Defines samples quantity.
+const byte takes = 3;      //Defines samples quantity.
+int medidas[takes];
 
 void setup() {
   servo.attach(pin_servo, 900, 2100);
